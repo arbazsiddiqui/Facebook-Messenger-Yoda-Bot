@@ -1,6 +1,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
+var unirest = require('unirest')
 var app = express()
 
 app.set('port', (process.env.PORT || 5000))
@@ -31,7 +32,15 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
-            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            yodaSpeaks=''
+            unirest.get("https://yoda.p.mashape.com/yoda?sentence=" + text)
+                .header("X-Mashape-Key", "273VjJrKohmshTavLdHZNY4btKv4p14E0kkjsnyyZ1DJJSRGkN")
+                .header("Accept", "text/plain")
+                .end(function (result) {
+                    console.log(result.status, result.body);
+                    yodaSpeaks = result.body
+                });
+            sendTextMessage(sender, yodaSpeaks)
         }
     }
     res.sendStatus(200)
@@ -49,7 +58,7 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
             recipient: {id:sender},
-            message: messageData,
+            message: messageData
         }
     }, function(error, response, body) {
         if (error) {
@@ -59,6 +68,7 @@ function sendTextMessage(sender, text) {
         }
     })
 }
+
 
 
 // Spin up the server
