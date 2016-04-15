@@ -32,15 +32,15 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
-            yodaSpeaks=''
+            yodaSpeaks = ''
             unirest.get("https://yoda.p.mashape.com/yoda?sentence=" + text)
                 .header("X-Mashape-Key", "273VjJrKohmshTavLdHZNY4btKv4p14E0kkjsnyyZ1DJJSRGkN")
                 .header("Accept", "text/plain")
                 .end(function (result) {
-                    console.log(result.status, result.body);
-                    yodaSpeaks = result.body
+                    console.log(result);
+                    yodaSpeaks = result.body;
+                    sendTextMessage(sender, String(yodaSpeaks))
                 });
-            sendTextMessage(sender, yodaSpeaks.toString())
         }
     }
     res.sendStatus(200)
@@ -58,7 +58,7 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
             recipient: {id:sender},
-            message: messageData
+            message: messageData,
         }
     }, function(error, response, body) {
         if (error) {
@@ -68,8 +68,6 @@ function sendTextMessage(sender, text) {
         }
     })
 }
-
-
 
 // Spin up the server
 app.listen(app.get('port'), function() {
