@@ -40,7 +40,7 @@ app.post('/webhook/', function (req, res) {
                     console.log(result.status, result.body);
                     yodaSpeaks = result.body
                 });
-            sendTextMessage(sender, yodaSpeaks)
+            sendTextMessage(sender, yodaSpeaks.toString())
         }
     }
     res.sendStatus(200)
