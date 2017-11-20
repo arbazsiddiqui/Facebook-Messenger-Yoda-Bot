@@ -3,7 +3,7 @@
 A Facebook messenger bot which echoes your message, BUT in YODA style. 
 
 
-###How to use :
+### How to use :
 
 1. Perform a clone of this repo ```git clone https://github.com/arbazsiddiqui/Facebook-Messenger-Yoda-Bot```
 2. Install the required packages ```npm install```
@@ -12,7 +12,7 @@ A Facebook messenger bot which echoes your message, BUT in YODA style.
 5. Go to your page and start chatting.
 
 
-###Screenshots :
+### Screenshots :
 
 
 ![alt tag](https://github.com/arbazsiddiqui/Facebook-Messenger-Yoda-Bot/blob/master/screenshots/demo.png)
